@@ -91,6 +91,9 @@ curl -X POST http://127.0.0.1:5000/api/v1/anime \
 curl -X DELETE "http://127.0.0.1:5000/api/v1/anime/Pikachu" \
   -H "Authorization: Bearer $TOKEN"
 
+### API Endpoint Testing
+pytest tests -v
+
 ## Author
 <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 30px;">
 
