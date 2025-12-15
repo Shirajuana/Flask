@@ -78,13 +78,13 @@ curl -X POST http://127.0.0.1:5000/api/v1/anime \
   }'
 
 ### Update anime with the token
- curl -X POST http://127.0.0.1:5000/api/v1/anime \
+ curl -X PUT http://127.0.0.1:5000/api/v1/anime/Pikachu\
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
   -d '{
-    "Title": "Pikachu",
-    "ReleaseYear": 2011,
-    "Rating": 9.0
+    "Title": "Pikachu season2n",
+    "ReleaseYear": 2020,
+    "Rating": 9.5
   }'
 
 ### Delete anime by title
