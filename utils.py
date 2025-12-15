@@ -5,23 +5,21 @@ import xmltodict
 from config import Config
 
 class DatabaseConnection:
-    """Database connection handler"""
-    
     @staticmethod
     def get_connection():
-        """Create database connection"""
         try:
             connection = mysql.connector.connect(
                 host=Config.DB_HOST,
                 user=Config.DB_USER,
                 password=Config.DB_PASSWORD,
-                database=Config.DB_NAME
+                database=Config.DB_NAME,
+                buffered=True  # ADD THIS LINE
             )
             return connection
         except Error as e:
             print(f"Error connecting to MySQL: {e}")
             return None
-
+        
 class ResponseFormatter:
     """Format response as JSON or XML"""
     

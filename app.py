@@ -182,8 +182,6 @@ def get_all_anime():
 @app.route(f'/api/{Config.API_VERSION}/anime/<string:title>', methods=['GET'])
 def get_anime(title):
     """Get specific anime by title"""
-    
-    
     try:
         format_type = request.args.get('format', 'json')
         
@@ -196,6 +194,12 @@ def get_anime(title):
         cursor = connection.cursor(dictionary=True)
         cursor.execute("SELECT * FROM anime WHERE Title = %s", (title,))
         anime = cursor.fetchone()
+        
+        # FIX: Consume any remaining unread results
+        try:
+            cursor.fetchall()  # Consume any remaining results
+        except mysql.connector.errors.InterfaceError:
+            pass  # No more results to fetch
         
         cursor.close()
         connection.close()
@@ -342,6 +346,15 @@ def update_anime(title):
                     {'error': 'Invalid rating format'}, format_type
                 )[0], 400
         
+        # FIX: Consume any unread results before executing another query
+        try:
+            # Try to fetch any remaining results from the previous query
+            cursor.fetchall()
+        except mysql.connector.errors.InterfaceError:
+            # No more results to fetch, which is fine
+            pass
+        
+        # Now execute the UPDATE query
         cursor.execute(
             "UPDATE anime SET Title = %s, ReleaseYear = %s, Rating = %s WHERE Title = %s",
             (new_title, release_year, rating, title)
