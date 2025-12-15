@@ -56,7 +56,7 @@ curl -X POST http://127.0.0.1:5000/api/v1/auth/login \
   -d '{"username":"admin","password":"admin123"}'
 
 
-## Cartoons API
+## ANIME API
 
 ### Get all anime
 curl http://127.0.0.1:5000/api/v1/anime
